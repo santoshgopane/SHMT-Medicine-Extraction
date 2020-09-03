@@ -7,7 +7,7 @@ from fuzzywuzzy import process
 from django.contrib import messages
 import re
 
-# Imorting Dataset!
+# Importing Dataset!
 data = pd.read_excel('C:/Data Science/Internship/Data_Onemg.xlsx')
 data.rename(columns={'Prescription Required':'PrescriptionRequired','Units in Pack': 'UnitsinPack', 'Pack Size': 'PackSize', 'Pack Form': 'PackForm'},inplace=True)
 
