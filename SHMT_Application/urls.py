@@ -19,5 +19,4 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('medicine_extraction.urls')),
-    path('Netmeds',include('Product_Extract.urls')),
     ]

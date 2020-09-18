@@ -94,8 +94,7 @@ def Data_Netmeds(Medname,Ingrid):
         df = pd.DataFrame()
     return df
 
-
-
+# Main function for Onemg!
 def Data_Onemg(Medname,Ingrid):
 
     data = pd.read_excel('C:/Data Science/Internship/Data_Onemg.xlsx')
@@ -166,6 +165,77 @@ def Data_Onemg(Medname,Ingrid):
         df = pd.DataFrame()
     return df
  
+# Main function for Onemg!
+def Data_Medlife(Medname,Ingrid):
+    data = pd.read_excel('C:/Data Science/Internship/Data_Medlife.xlsx')
+    data.rename(columns={'Pack Size': 'PackSize', 'pack_form': 'PackForm'},inplace=True)
+    medicines_list = data['medName'].unique()
+    ingird_list = data['Ingredients'].unique()
+
+    if Medname!='':
+        opt = medicine_match(Medname,medicines_list)
+        update = []
+        for i in range(len(opt)):
+            update.append(opt[i][0])
+        string_split = Medname.split()
+        matched_medicines = []
+        for item in update:
+            count = 0
+            for str in string_split:
+                if str.lower() in item.lower() and count<=len(string_split):
+                    count = count+ 1
+            if count >= len(string_split):
+                matched_medicines.append(item)
+    else:
+        matched_medicines=[]
+    # Considering only relevent matches for Ingredients!
+    matched_ingrid = []
+    if Ingrid != '':
+        opt1 = Ingrid_match(Ingrid,ingird_list)
+        update1 = []
+        for i in range(len(opt1)):
+            update1.append(opt1[i][0])
+        string1_split = re.split(' [+] ',Ingrid)
+        length = len(Ingrid.split(' +'))
+        matched_ingrid = []
+        for item in update1:
+            count = 0
+            for strng in string1_split:
+                if strng.lower() in item.lower() and count<=length:
+                    count = count+ 1
+            if count >= length and count <= length+1:
+                matched_ingrid.append(item)
+    else:
+        matched_ingrid = []
+    # Extracting relevent rows from data.
+    if not matched_medicines and matched_ingrid: #If only entered Ingridients. 
+        all_row=[]
+        for ingridient in matched_ingrid:
+            row = data[data['Ingredients']==ingridient]
+            all_row.append(row)
+            df = pd.concat(all_row)
+    elif not matched_ingrid and matched_medicines: #If only entered Medicine name.
+        all_row=[]
+        for medicine in matched_medicines:
+            row = data[data['medName']==medicine]
+            all_row.append(row)
+            df = pd.concat(all_row)
+    elif matched_medicines and matched_ingrid: # If both of the is entered.
+        all_row=[]
+        all_raw=[]
+        for medicine in matched_medicines:
+            raw = data[data['medName']== medicine]
+            all_raw.append(raw)
+            raw_df = pd.concat(all_raw)
+        for ingridient in matched_ingrid:
+            row = raw_df[raw_df['Ingredients']==ingridient]
+            all_row.append(row)
+            df = pd.concat(all_row)
+    else:
+        df = pd.DataFrame()
+    return df
+
+
 def Table_Display(df):
 
     all_data=[]
@@ -175,6 +245,7 @@ def Table_Display(df):
         all_data.append(dict(temp))
     context = {'table_data':all_data}
     return context    
+
 
 def Display(request):
     if request.method == 'POST':
@@ -189,6 +260,14 @@ def Display(request):
             context = Table_Display(df)
             # return render(request,'index.html',context)
             return render(request,'index netmeds.html',context)
+
+        elif selected == 'Data_Medlife':
+            df = Data_Medlife(Medname,Ingrid)
+            if df.empty:
+                messages.success(request,('No records found!'))
+            context = Table_Display(df)
+            return render(request,'index medlife.html',context)
+            
         else:
             # Considering only relevent matches for medicines!
             df = Data_Onemg(Medname,Ingrid)

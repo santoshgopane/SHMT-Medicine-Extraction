@@ -35,7 +35,7 @@
 {% endif %}
 
 <div class="container">
-        <h2>Check Netmeds Availability!</h2>
+        <h2>Check medlife Availability!</h2>
         <form action="display" method="POST" class="form-inline">
             {% csrf_token %}
             <select class="form-control" id="exampleFormControlSelect1" name="Supplier">
@@ -60,27 +60,21 @@
 <table border='1' cellpadding='5' cellspacing='5'>
     <td bgcolor="Teal Color">MedName</td>
     <td bgcolor="Teal Color">Manufacturer</td>
-    <td bgcolor="Teal Color">Netmeds price</td>
-    <td bgcolor="Teal Color">Salts</td>
-    <td bgcolor="Teal Color">Prescription Required</td>
-    <td bgcolor="Teal Color">Pack Size Label</td>
-    <td bgcolor="Teal Color">Quant in Pack</td>
-    <td bgcolor="Teal Color">In Stock</td>
-    <td bgcolor="Teal Color">Strength in mg</td>
+    <td bgcolor="Teal Color">Price</td>
+    <td bgcolor="Teal Color">Ingredients</td>
+    <td bgcolor="Teal Color">Medicine Type</td>
     <td bgcolor="Teal Color">Pack Size</td>
+    <td bgcolor="Teal Color">Strength</td>
     <td bgcolor="Teal Color">Pack Form</td>
     {% for i in table_data %}
     <tr>
         <td bgcolor="lightgrey">{{i.medName}}</td>
         <td bgcolor="lightgrey">{{i.manufacturer}}</td>
-        <td bgcolor="lightgrey">{{i.netmeds_price}}</td>
-        <td bgcolor="lightgrey">{{i.salts}}</td>
-        <td bgcolor="lightgrey">{{i.prescription_req}}</td>        
-        <td bgcolor="lightgrey">{{i.pack_size_label}}</td>
-        <td bgcolor="lightgrey">{{i.quantity_in_pack}}</td>
-        <td bgcolor="lightgrey">{{i.in_stock}}</td>
-        <td bgcolor="lightgrey">{{i.strength_in_mg}}</td>
+        <td bgcolor="lightgrey">{{i.medlife_price}}</td>
+        <td bgcolor="lightgrey">{{i.Ingredients}}</td>
+        <td bgcolor="lightgrey">{{i.medicineType}}</td>        
         <td bgcolor="lightgrey">{{i.PackSize}}</td>
+        <td bgcolor="lightgrey">{{i.strength}}</td>
         <td bgcolor="lightgrey">{{i.PackForm}}</td>
 
 </tr>

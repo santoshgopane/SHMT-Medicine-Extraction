@@ -35,13 +35,14 @@
 {% endif %}
 
 <div class="container">
-        <h2>Check Medicines Availability!</h2>
+        <h2>Check Onemg Availability!</h2>
         <form action="display" method="POST" class="form-inline">
             {% csrf_token %}
             <select class="form-control" id="exampleFormControlSelect1" name="Supplier">
                 <option selected='selected'>Please select</option>
                 <option value='Data_onemg'>One Mg</option>
                 <option value='Data_Netmeds'>Netmeds</option>
+                <option value='Data_Medlife'>Medlife</option>
                 <!-- <option>Medlife</option>
                 <option>Pharmacy</option> -->
               </select>
