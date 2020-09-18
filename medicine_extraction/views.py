@@ -267,8 +267,8 @@ def Display(request):
                 messages.success(request,('No records found!'))
             context = Table_Display(df)
             return render(request,'index medlife.html',context)
-            
-        else:
+
+        else: #Onemg to be changed to elif and keep blank option for merged data!
             # Considering only relevent matches for medicines!
             df = Data_Onemg(Medname,Ingrid)
             if df.empty:
